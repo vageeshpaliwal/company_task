@@ -1,0 +1,33 @@
+<?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class StoreDeviceRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {
+        return false;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     */
+    public function rules(): array
+    {
+        return [
+            'name' => 'required|string|max:255',
+            'type' => 'required|string|max:255',
+            'unique_num' => 'required|string|max:255|unique:devices',
+            'os' => 'required|string|max:255',
+            'purchase_date' => 'required|date',
+            'warranty_expiry_date' => 'required|date|after_or_equal:purchase_date',
+        ];
+    }
+}
