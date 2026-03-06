@@ -17,8 +17,8 @@ Route::post('/signup', [AuthController::class, 'signup']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('devices', DeviceController::class);
     Route::get('users', [UserController::class, 'index']);
-    Route::post('/tickets', [TicketController::class, 'store']);
     Route::post('allocate-device', [AllocationController::class, 'store']);
     Route::apiResource('tickets', TicketController::class);
     Route::patch('/tickets/{id}/status', [TicketController::class, 'updateStatus']);
+    Route::delete('deallocate-device', [AllocationController::class, 'deallocate']);
 });

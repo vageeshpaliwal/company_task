@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\device;
-use App\Models\Ticket;
+use App\Models\ticket;
 use App\Services\TicketService;
 
 class TicketController extends Controller
@@ -15,7 +15,7 @@ class TicketController extends Controller
         $request->validate([
             'device_id' => 'required|exists:devices,id',
         ]);
-        $device= Device::find($request->device_id);
+        $device= device::find($request->device_id);
 
         if($device->warranty_expiry_date < now()){
             return response()->json([
@@ -38,7 +38,7 @@ class TicketController extends Controller
 
     public function updateStatus(Request $request,$id)
     {
-        $ticket = Ticket::findOrFail($id);
+        $ticket = ticket::findOrFail($id);
         $request->validate([
             'status' => 'required|in:open,in_progress,closed',
         ]);
@@ -63,7 +63,7 @@ class TicketController extends Controller
     }
     public function index(Request $request)
     {
-        $tickets = Ticket::with('device');
+        $tickets = ticket::with('device');
         if($request ->search){
             $tickets = $tickets->where('ticket_number', 'like', '%' . $request->search . '%');
         }

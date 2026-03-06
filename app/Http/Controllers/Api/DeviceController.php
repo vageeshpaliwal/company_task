@@ -6,14 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreDeviceRequest;
 use Illuminate\Http\Request;
 use Illuminate\Session\Store;
-use App\Models\Device;
+use App\Models\device;
 
 class DeviceController extends Controller
 {
 
     public function index(Request $request)
     {
-        $query = Device::with('users');
+      
+        $query = Device::query();
 
         if($request->search){
             $query->where('name','like',"%$request->search%")
@@ -51,7 +52,7 @@ class DeviceController extends Controller
     {
         $validated = $request->validated();
 
-        $device = Device::create([
+        $device = device::create([
             'name' => $validated['name'],
             'type' => $validated['type'],
             'unique_num' => $validated['unique_num'],
