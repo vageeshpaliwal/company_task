@@ -14,7 +14,7 @@ class DeviceController extends Controller
     public function index(Request $request)
     {
       
-        $query = Device::query();
+        $query = Device::with('users');
 
         if($request->search){
             $query->where('name','like',"%$request->search%")
